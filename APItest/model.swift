@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 // MARK: - Base Response Structure
 struct BaseResponse<T: Codable>: Codable {
     let success: Bool
@@ -76,6 +77,25 @@ struct AllEventsResponse: Codable {
     let status: String
     let message: String
     let data: [EventInfo]?
+}
+
+// MARK: - Settings Manager
+class SettingsManager {
+    static let shared = SettingsManager()
+    private let userDefaults = UserDefaults.standard
+    private let testModeKey = "isTestMode"
+    
+    private init() {}
+    
+    var isTestMode: Bool {
+        get {
+            // 預設為 false (非測試模式)
+            return userDefaults.bool(forKey: testModeKey)
+        }
+        set {
+            userDefaults.set(newValue, forKey: testModeKey)
+        }
+    }
 }
 
 // MARK: - API Service Class
